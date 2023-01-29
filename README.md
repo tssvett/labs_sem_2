@@ -5,4 +5,4 @@
  <li>Основы трансляции языков программирования</li>
 </ul>
 
-![alt text](https://sun9-47.userapi.com/impg/gxIqRpBS04l4zOXkM6rHwlF9QfOBd-p1VO7xdw/yjHgyfVPB7k.jpg?size=640x640&quality=96&sign=0208c92e0012dda2a165fb6db6367626&type=album)
+<h3 align= "center">![alt text](https://sun9-47.userapi.com/impg/gxIqRpBS04l4zOXkM6rHwlF9QfOBd-p1VO7xdw/yjHgyfVPB7k.jpg?size=640x640&quality=96&sign=0208c92e0012dda2a165fb6db6367626&type=album) </h3>
