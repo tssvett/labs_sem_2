@@ -1,0 +1,8 @@
+
+*.vcxproj
+*.filters
+*.user
+*.ipch
+*.db
+YAP_0/.vs/YAP_0/v15/.suo
+YAP_0/YAP_0.sln
