@@ -1,3 +1,19 @@
 
 *.sln
 YAP_0/.vs/YAP_0/v15/.suo
+List/.vs/List/v15/.suo
+*.user
+*.filters
+*.vcxproj
+*.pdb
+*.tlog
+*.ipch
+*.log
+*.obj
+*.enc
+*.idb
+*.ilk
+*.exe
+*.db
+OT_1/.vs/OT_1/v15/.suo
+YAP_1/.vs/YAP_1/v15/.suo
