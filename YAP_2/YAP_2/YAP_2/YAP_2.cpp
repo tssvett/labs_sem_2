@@ -6,43 +6,42 @@ using ld = long double;
 
 
 void fill_matrix(std::ifstream &ifile, ld**& matrix, ll matrix_row, ll matrix_col) {
-	for (int i = 0; i < matrix_row; i++) {	//Выделяем память под массивы
+	for (int i = 0; i < matrix_row; ++i) {	//Выделяем память под массивы
 		matrix[i] = new ld[matrix_col];
 	}
-	for (int i = 0; i < matrix_row; i++) {	//Заполняем эти массивы
-		for (int j = 0; j < matrix_col; j++) {
+	for (int i = 0; i < matrix_row; ++i) {	//Заполняем эти массивы
+		for (int j = 0; j < matrix_col; ++j) {
 			ifile >> matrix[i][j];
 		}
 	}
-	ifile.close();
 }
 
 
-void delete_matrix(ld**& matrix, ll matrix_row) {	//Удаление матрицы
-	for (int i = 0; i < matrix_row; i++) {
-		delete[] matrix[i];
+void delete_matrix(ld**& two_dimensional, ll matrix_row) {	//Удаление матрицы
+	for (int i = 0; i < matrix_row; ++i) {
+		delete[] two_dimensional[i];
 	}
-	delete[] matrix;
+	delete[] two_dimensional;
 }
 
 //В варианте написано считать сумму по стобцам, а все тесты считают по строкам ???
 //Сумма по строкам
-void cumulative_sum_calc(ld**& matrix, ll rows, ll cols) {
-	ld* sums = new ld[rows]; //Вычисление промежуточной суммы по строкам
-	for (int i = 0; i < rows; i++) {
-		sums[i] = 0;	//Изначально сумма ноль
-		for (int j = 0; j < cols; j++) {
-			sums[i] += matrix[i][j]; // добавление текущего элемента к сумме
-			matrix[i][j] = sums[i]; // замена текущего элемента на промежуточную сумму
+void cumulative_sum_calc(ld**& matrix, ll matrix_row, ll matrix_col) {
+	ld* cumulative_sum = new ld[matrix_row]; //Вычисление промежуточной суммы по строкам
+	for (int i = 0; i < matrix_row; ++i) {
+		cumulative_sum[i] = 0;	//Изначально сумма ноль
+		for (int j = 0; j < matrix_col; ++j) {
+			cumulative_sum[i] += matrix[i][j]; // добавление текущего элемента к сумме
+			matrix[i][j] = cumulative_sum[i]; // замена текущего элемента на промежуточную сумму
 		}
 	}
-	delete[] sums;
+	delete[] cumulative_sum;
 }
 
 
 void print(std::ofstream& ofile, ld** matrix, ll rows, ll cols) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j) {
 			std::cout << matrix[i][j] << " ";
 			ofile << matrix[i][j] << " ";
 		}
