@@ -39,9 +39,9 @@ void cumulative_sum_calc(ld**& matrix, ll matrix_row, ll matrix_col) {
 }
 
 
-void print(std::ofstream& ofile, ld** matrix, ll rows, ll cols) {
-	for (int i = 0; i < rows; ++i) {
-		for (int j = 0; j < cols; ++j) {
+void print(std::ofstream& ofile, ld** matrix, ll matrix_row, ll matrix_col) {
+	for (int i = 0; i < matrix_row; ++i) {
+		for (int j = 0; j < matrix_col; ++j) {
 			std::cout << matrix[i][j] << " ";
 			ofile << matrix[i][j] << " ";
 		}
@@ -67,7 +67,7 @@ int main() {
 	ll matrix_row; ll matrix_col;
 	std::ifstream ifile("input.txt");
 	std::ofstream ofile("output.txt");
-	ifile >> matrix_row >> matrix_col;	
+	ifile >> matrix_row >> matrix_col;
 	ld** matrix = new ld*[matrix_row];	// Создаем матрицу
 	fill_matrix(ifile, matrix, matrix_row, matrix_col);	//Заполняем ее
 	cumulative_sum_calc(matrix, matrix_row, matrix_col);	//	Обработка согласно заданию
