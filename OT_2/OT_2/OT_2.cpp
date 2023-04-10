@@ -51,7 +51,6 @@ bool is_word_border(char symbol) {
 
 bool is_rus(char symbol) {
 	return ((symbol >= 'А' && symbol <= 'я') || symbol == 'Ё'||symbol =='ё' ? 1 : 0);
-
 }
 
 
@@ -70,7 +69,6 @@ long long get_line_size(ifstream& ifile) {
 	line_size = ifile.tellg();	// Записываем в переменную количество символов
 	ifile.seekg(0, ios_base::beg);	// Возвращаем обратно указатель на начало файла
 	return line_size;
-
 }
 
 
@@ -88,7 +86,6 @@ void filling_table(States(*table)[6]) { // Формируем матрицу с�
 	table[Consonant][T] = B;
 	table[Border][T] = F;
 	table[Other][T] = E;
-
 
 	table[Capital_vowel][A] = A;
 	table[Capital_consonant][A] = B;
@@ -117,8 +114,6 @@ void filling_table(States(*table)[6]) { // Формируем матрицу с�
 	table[Consonant][F] = F;
 	table[Border][F] = F;
 	table[Other][F] = F;
-
-
 }
 
 
