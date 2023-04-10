@@ -226,7 +226,7 @@ public:
 	void heap_sort() {
 		int n = this->size_of_linked_list;
 		Node* tempppppp = head_pointer;
-		//Загружаем к кучу элементы
+		//Загружаем в кучу элементы
 		for (int kk = n / 2 - 1; kk >= 0; kk--)
 			get_heappp(tempppppp, n, kk);
 		//Меняем Максимальный элемент с элементом i-1
@@ -283,6 +283,7 @@ public:
 			get_heappp(temptemp, n, largestlargest);
 		}
 	}
+
 
 	void heap_swap(int i, int k, Node* swapList) {	
 		Node* temp1 = swapList;
