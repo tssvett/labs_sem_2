@@ -3,7 +3,7 @@
 #include<deque>
 //28. Сбалансированное дерево. Процедура: Удаление нечётных элементов. Обход дерева: Прямой.
 using namespace std;
-int extract_number(deque<int>& all_numbers);
+int extract_number(ifstream& ifile);
 bool is_odd(int value);
 
 //Класс узла
@@ -55,37 +55,37 @@ public:
 	}
 
 	//Функция нужна для того, чтобы не передавать корень как аргумент в мейне
-	void fill(deque<Btree_node*>& tree_deque, deque<int>& all_numbers) {
-		Balanced_tree_root = new Btree_node(extract_number(all_numbers));
+	void fill(ifstream& ifile) {
+		deque<Btree_node*> tree_deque;
+		Balanced_tree_root = new Btree_node(extract_number(ifile));
 		tree_deque.push_back(Balanced_tree_root);
-		t_fill(Balanced_tree_root, tree_deque, all_numbers);
+		t_fill(Balanced_tree_root, tree_deque, ifile);
 	}
 
 	//Заполнение дерева в ширину, приоритет - левый узел
-	void t_fill(Btree_node* current_node, deque<Btree_node*>& tree_deque, deque<int>& all_numbers) {
-		if (all_numbers.empty())
+	void t_fill(Btree_node* current_node, deque<Btree_node*>& tree_deque, ifstream& ifile) {
+		if (ifile.peek() == EOF)
 			return;
 		if (!current_node->left) {
-			current_node->left = new Btree_node(extract_number(all_numbers));
+			current_node->left = new Btree_node(extract_number(ifile));
 			//Добавляем дважды в очередь узел, тк у узла два дочерних элемента
 			tree_deque.push_back(current_node->left);
 			tree_deque.push_back(current_node->left);
 		}
 		else if (!current_node->right) {
-			current_node->right = new Btree_node(extract_number(all_numbers));
+			current_node->right = new Btree_node(extract_number(ifile));
 			//Добавляем дважды в очередь узел, тк у узла два дочерних элемента
 			tree_deque.push_back(current_node->right);
 			tree_deque.push_back(current_node->right);
 		}
 		//Если числа есть, то обновляем очередь
-		if (!all_numbers.empty()) {
+		if (ifile.peek() != EOF) {
 			Btree_node* next = tree_deque.front();
 			tree_deque.pop_front();
-			t_fill(next, tree_deque, all_numbers);
+			t_fill(next, tree_deque, ifile);
 		}
 		//Если числа кончились, выходим из рекурсии
 		else {
-			all_numbers.clear();
 			tree_deque.clear();
 			return;
 		}
@@ -193,9 +193,7 @@ public:
 					retraction(parent_node->right, tmp->right);
 					delete tmp;
 				}
-
 			}
-
 		}
 	}
 
@@ -220,21 +218,11 @@ public:
 };
 
 
-//Функция, которая считывает файл в очередь
-deque<int> file_read(ifstream& ifile) {
-	int new_deque_element;
-	deque<int> all_numbers;
-	while (ifile >> new_deque_element)
-		all_numbers.push_back(new_deque_element);
-	return all_numbers;
-}
-
-
-//Функция, которая берет элемент из очереди
-int extract_number(deque<int>& all_numbers) {
-	int number_value = all_numbers.front();
-	all_numbers.pop_front();
-	return number_value;
+//Функция, которая берет элемент из файла
+int extract_number(ifstream& ifile) {
+	int new_number;
+	ifile >> new_number;
+	return new_number;
 }
 
 
@@ -248,12 +236,9 @@ bool is_odd(int value) {
 int main() {
 	ifstream ifile("input.txt");
 	ofstream ofile("output.txt");	//Объявление переменных
-	deque<int> all_numbers;
-	deque<Btree_node*> tree_deque;
 	BalancedTree balanced_tree;
-	all_numbers = file_read(ifile);		//Читаем файл в очередь
-	balanced_tree.fill(tree_deque, all_numbers);		//Заполняем дерево
-	balanced_tree.delete_odds();		//Удаляем нечетные элементы
+	balanced_tree.fill(ifile);	//Заполняем дерево
+	balanced_tree.delete_odds();	//Удаляем нечетные элементы
 	balanced_tree.print(ofile);	//Выводим дерево
 	ofile.close();
 	ifile.close();
