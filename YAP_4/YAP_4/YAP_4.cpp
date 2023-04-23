@@ -35,7 +35,7 @@ public:
 
 	//Деструктор
 	~BalancedTree() {
-		if (Balanced_tree_root != nullptr)
+		if (Balanced_tree_root)
 		{
 			destruct_delete(Balanced_tree_root);
 			Balanced_tree_root = nullptr;
@@ -44,9 +44,9 @@ public:
 	}
 
 	// Вспомогательная функция для деструктора
-	void destruct_delete(Btree_node* current_node)
+	void destruct_delete(Btree_node*& current_node)
 	{
-		if (current_node != nullptr)
+		if (current_node)
 		{
 			destruct_delete(current_node->left);
 			destruct_delete(current_node->right);
@@ -60,6 +60,7 @@ public:
 		Balanced_tree_root = new Btree_node(extract_number(ifile));
 		tree_deque.push_back(Balanced_tree_root);
 		t_fill(Balanced_tree_root, tree_deque, ifile);
+		tree_deque.clear();
 	}
 
 	//Заполнение дерева в ширину, приоритет - левый узел
@@ -86,7 +87,6 @@ public:
 		}
 		//Если числа кончились, выходим из рекурсии
 		else {
-			tree_deque.clear();
 			return;
 		}
 	}
@@ -120,7 +120,7 @@ public:
 			return;
 		if (is_odd(current_node->value)) {
 			delete_node(current_node, parent_node);
-			t_delete_odds(current_node, parent_node);   //рекурсивный вызов левого поддерева
+			t_delete_odds(current_node, parent_node);   //перепроверяем текущий элемент
 		}
 		else {
 			t_delete_odds(current_node->left, current_node);   //рекурсивный вызов левого поддерева
@@ -157,10 +157,12 @@ public:
 				if (current_node == parent_node->left) {
 					parent_node->left = nullptr;
 					delete parent_node->left;
+					delete current_node;
 				}
 				else if (current_node == parent_node->right) {
 					parent_node->right = nullptr;
 					delete parent_node->right;
+					delete current_node;
 				}
 			}
 			else if (current_node->left && !current_node->right) {
