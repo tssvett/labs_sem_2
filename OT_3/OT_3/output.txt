@@ -1,2 +1,2 @@
-+[ao] -[ao] -[ao] +[ao] >=[co] >=[co] >[co] <[co] <>[co] =[eq] <>[co] =[eq] 
+<=[co] =[eq] =[eq] =[eq] =[eq] 
 

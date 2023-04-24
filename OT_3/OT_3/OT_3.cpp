@@ -61,7 +61,7 @@ void filling_table(States table[8][10]) { // Формируем матрицу �
 	table[co_l][CO_L] = F;
 	table[co_r][CO_L] = NOT_CO;
 	table[ao][CO_L] = F;
-	table[eq][CO_L] = CO_R;
+	table[eq][CO_L] = NOT_CO;
 	table[id][CO_L] = F;
 	table[wl][CO_L] = WL;
 
@@ -70,7 +70,7 @@ void filling_table(States table[8][10]) { // Формируем матрицу �
 	table[co_l][CO_R] = F;
 	table[co_r][CO_R] = F;
 	table[ao][CO_R] = F;
-	table[eq][CO_R] = CO_R;
+	table[eq][CO_R] = NOT_CO;
 	table[id][CO_R] = F;
 	table[wl][CO_R] = F;
 
