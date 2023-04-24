@@ -90,7 +90,7 @@ void filling_table(States table[8][10]) { // Формируем матрицу �
 	table[ao][AO] = F;
 	table[eq][AO] = F;
 	table[id][AO] = F;
-	table[wl][AO] = WL;
+	table[wl][AO] = F;
 
 	table[wb][EQ] = F;
 	table[vl][EQ] = F;
