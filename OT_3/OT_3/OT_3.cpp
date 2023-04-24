@@ -20,7 +20,7 @@ enum Type {wb, vl, co_l,co_r, ao, eq, id, wl, kw };
 //Необходимо для преобразование порядкого номера из перечесление в выводную лексему
 const char* print_types[] = { "[wb]", "[vl]", "[co]","[co]", "[ao]", "[eq]", "[id]", "[wl]", "[kw]" };
 //Состояния
-enum States { S, VL, CO_L, CO_R, AO, EQ, ID, WL, F };
+enum States { S, VL, CO_L,  CO_R, NOT_CO, AO, EQ, ID, WL, F };
 
 //Структура лексемы
 struct Lex {
@@ -28,7 +28,7 @@ struct Lex {
 	Type type;
 };
 
-void filling_table(States table[8][9]) { // Формируем матрицу состояний
+void filling_table(States table[8][10]) { // Формируем матрицу состояний
 	table[wb][S] = S;
 	table[vl][S] = VL;
 	table[co_l][S] = CO_L;
@@ -49,8 +49,8 @@ void filling_table(States table[8][9]) { // Формируем матрицу с
 
 	table[wb][VL] = F;
 	table[vl][VL] = VL;
-	table[co_l][ID] = F;
-	table[co_r][ID] = F;
+	table[co_l][VL] = F;
+	table[co_r][VL] = F;
 	table[ao][VL] = F;
 	table[eq][VL] = F;
 	table[id][VL] = WL;
@@ -59,7 +59,7 @@ void filling_table(States table[8][9]) { // Формируем матрицу с
 	table[wb][CO_L] = F;
 	table[vl][CO_L] = F;
 	table[co_l][CO_L] = F;
-	table[co_r][CO_L] = CO_R;
+	table[co_r][CO_L] = NOT_CO;
 	table[ao][CO_L] = F;
 	table[eq][CO_L] = CO_R;
 	table[id][CO_L] = F;
@@ -73,6 +73,15 @@ void filling_table(States table[8][9]) { // Формируем матрицу с
 	table[eq][CO_R] = CO_R;
 	table[id][CO_R] = F;
 	table[wl][CO_R] = F;
+
+	table[wb][NOT_CO] = F;
+	table[vl][NOT_CO] = F;
+	table[co_l][NOT_CO] = F;
+	table[co_r][NOT_CO] = F;
+	table[ao][NOT_CO] = F;
+	table[eq][NOT_CO] = F;
+	table[id][NOT_CO] = F;
+	table[wl][NOT_CO] = F;
 
 	table[wb][AO] = F;
 	table[vl][AO] = F;
@@ -212,7 +221,7 @@ Type states_to_types(char* text, const States state) {
 		return id;
 	else if (state == VL && number >= -32768 && number <= 32767)
 		return vl;
-	else if (state == CO_L)
+	else if (state == CO_L || state == NOT_CO)
 		return co_l;
 	else if (state == CO_R)
 		return co_r;
@@ -229,7 +238,7 @@ Type states_to_types(char* text, const States state) {
 //ids заполняется списком идентификаторов
 //vals заполняется списком констант
 void lexical_analysis(vector<Lex>& lexems, vector<Lex>& ids, vector<Lex>& vals, 
-	char* const line, States table[8][9]) {
+	char* const line, States table[8][10]) {
 	int index = 0;
 	States cur_state = States::S;
 	int left_border = index;
@@ -295,7 +304,7 @@ int main() {
 	ifstream ifile("input.txt", ios::binary);	//замена \n на \t\n отсутствует из-за binary
 	ofstream ofile("output.txt");
 	vector<Lex> words; vector<Lex> ids; vector<Lex> vals;
-	States table_of_states[8][9];
+	States table_of_states[8][10];
 	char* line;
 	unsigned int line_size = get_line_size(ifile);
 	line = new char[line_size];	// Выделяем память под строку (+1 учтен в функции)
