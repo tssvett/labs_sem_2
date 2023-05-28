@@ -1,2 +1,2 @@
-
-0 se
+select[se] -[ao] -[ao] -[ao] -[ao] 7[vl] 
+2 id vl

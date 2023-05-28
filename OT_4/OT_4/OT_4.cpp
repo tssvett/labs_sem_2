@@ -632,6 +632,8 @@ public:
 		//Проверка на пустой файлик
 		if (current_state == S && !i)
 			error_throw(i, previous_state, ofile);
+		else if( current_state != E  && current_state != S)
+			error_throw(i, previous_state, ofile);
 	}
 
 	//Запись в файл ОК
@@ -642,8 +644,8 @@ public:
 
 	//Запись в файла места ошибки и типа лексемы, который должен быть
 	void error_throw(size_t i, States previous_state, ofstream& ofile) {
-		const char* error_message[] = { "se", "id vl", "ca", "vl", "id vl", "vl", "id", "eq", "id vl", "ca de en",
-			"vl", "id vl", "vl", "id", "eq", "id vl", "de en", "idk", "id", "eq", "id vl", "en" };
+		const char* error_message[] = { "se", "id vl", "ao ca", "vl", "id vl", "vl", "id", "eq", "id vl", "ao ca de en",
+			"vl", "id vl", "vl", "id", "eq", "id vl", "ao de en", "idk", "id", "eq", "id vl", "ao en" };
 		cout << i << " " << error_message[previous_state];
 		ofile << i << " " << error_message[previous_state];
 	}
